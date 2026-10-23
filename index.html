@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>编程猫（佛山北滘校区）· 参赛选手时间汇总</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23162C49'/%3E%3Cpath d='M18 20l15 12-15 12' stroke='%23fff' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M36 44h12' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+<style>
+  :root{
+    --bg:#F2F5FA;
+    --surface:#FFFFFF;
+    --ink:#1B2A41;
+    --muted:#66748E;
+    --line:#E2E8F2;
+    --navy:#162C49;
+    --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",system-ui,-apple-system,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px 64px;}
+
+  /* ===== 顶部导航 ===== */
+  .topnav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topnav-inner{max-width:1120px;margin:0 auto;padding:9px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+  .nav-brand{font-size:14.5px;font-weight:900;color:var(--navy);letter-spacing:.5px;}
+  .nav-links{display:flex;gap:6px;flex-wrap:wrap;}
+  .nav-links a{font-size:13.5px;font-weight:600;color:var(--muted);text-decoration:none;border:1px solid transparent;padding:5px 14px;border-radius:999px;transition:all .15s;}
+  .nav-links a:hover{color:var(--navy);background:#F0F4FB;border-color:var(--line);}
+  #timeline, #detail, #checkin{scroll-margin-top:60px;}
+
+  /* ===== 签到详情（四态登记） ===== */
+  .checkin-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 18px;}
+  .checkin-stats{display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;}
+  .cs-item{display:flex;align-items:baseline;gap:6px;}
+  .cs-num{font-size:22px;font-weight:900;color:var(--navy);font-variant-numeric:tabular-nums;}
+  .cs-lab{font-size:12.5px;color:var(--muted);}
+  .cs-mini{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--muted);}
+  .cs-dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  button.ckbtn{font-family:inherit;font-size:13px;font-weight:600;border-radius:10px;padding:7px 16px;cursor:pointer;border:1px solid var(--line);background:#F6F8FC;color:var(--ink);transition:all .12s;}
+  button.ckbtn:hover{border-color:#B9C6DC;}
+  /* 登记卡片列表 */
+  .ck-list{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+  .ck-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;transition:border-color .12s;}
+  .ck-row.on{border-color:#C9D6E8;background:#FBFCFE;}
+  .ck-info{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;}
+  .ck-seq{font-size:12px;color:#98A4BB;font-variant-numeric:tabular-nums;}
+  .ck-slotbar{width:4px;height:26px;border-radius:3px;background:var(--c);flex:none;}
+  .ck-name{font-size:14px;font-weight:800;color:var(--navy);}
+  .ck-inst{font-size:12px;font-weight:600;color:#5A6A85;background:#EEF3FA;border:1px solid #C9D6E8;border-radius:999px;padding:0 9px;white-space:nowrap;}
+  .ck-meta{font-size:12px;color:var(--muted);}
+  .ck-log{margin-top:7px;font-size:12px;display:flex;gap:14px;flex-wrap:wrap;}
+  .ck-log .lg-go{color:#1F7A4D;}
+  .ck-log .lg-back{color:#C00000;}
+  .ck-teacher{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .ck-teacher .g-label{font-size:12.5px;color:var(--muted);}
+  #ckTeacher{border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13.5px;font-family:inherit;color:var(--ink);background:#FBFCFE;outline:none;}
+  #ckTeacher:focus{border-color:#6C8BC7;}
+  .ck-teacher .ck-tip{font-size:12px;color:#8A94A6;}
+  #ckExport{background:#E8F0FB;color:#2B4C8C;border-color:#B9CCE8;}
+  .ck-btns{display:flex;gap:6px;flex-wrap:wrap;}
+  .ck-btn{font-family:inherit;font-size:12px;font-weight:700;border-radius:999px;padding:4px 12px;cursor:pointer;border:1px solid var(--line);background:#F6F8FC;color:#7C88A0;transition:all .12s;}
+  .ck-btn:hover{border-color:#B9C6DC;color:var(--ink);}
+  .ck-btn.on-go{color:#1F7A4D;background:#E3F2E9;border-color:#8FCEA9;}
+  .ck-btn.on-self{color:#1C7ED6;background:#E7F1FB;border-color:#9CC3EA;}
+  .ck-btn.on-back{color:#7048E8;background:#EEEAFB;border-color:#BBA8F0;}
+  .ck-btn.on-pick{color:#C00000;background:#FBE9E9;border-color:#EBA8A8;}
+  .ck-search{display:flex;align-items:center;gap:10px;margin-top:12px;}
+  #ckQ{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:14px;font-family:inherit;color:var(--ink);outline:none;background:#FBFCFE;transition:border-color .15s, box-shadow .15s;}
+  #ckQ:focus{border-color:#6C8BC7;box-shadow:0 0 0 3px rgba(108,139,199,.18);background:#fff;}
+  #ckQ::placeholder{color:#9AA6BC;}
+  #ckQCount{font-size:12.5px;color:var(--muted);white-space:nowrap;}
+  .ck-row.hit{box-shadow:0 0 0 2px #6C8BC7;border-color:#6C8BC7;}
+  .ck-filters{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;align-items:center;}
+  .ck-filters .g-label{font-size:12px;color:var(--muted);}
+  .ck-fchip.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .ck-slothead{display:flex;align-items:center;gap:10px;margin-top:18px;padding:9px 14px;border-radius:10px;background:#EFF3FA;border:1px solid #E0E7F2;}
+  .ck-slothead:first-child{margin-top:0;}
+  .csh-time{font-size:14px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .csh-name{font-size:12.5px;font-weight:700;color:var(--ink);}
+  .csh-prog{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--accent);}
+  .ck-slothead.full .csh-prog{color:#1F7A4D;}
+  .sk-fchip.active{background:#5F6B8A;color:#fff;border-color:#5F6B8A;}
+
+  /* ===== 头部 ===== */
+  header{
+    background:var(--navy);
+    color:#fff;
+    padding:0 0 30px;
+  }
+  .accent-bar{height:5px;background:linear-gradient(90deg,#1C7ED6,#0CA678,#7048E8,#E8590C,#C92A2A);}
+  .head-inner{max-width:1120px;margin:0 auto;padding:30px 20px 0;}
+  .eyebrow{display:inline-block;font-size:13px;font-weight:700;letter-spacing:2px;color:#9FB6D8;margin-bottom:10px;}
+  h1{font-size:30px;font-weight:900;letter-spacing:1px;}
+  .subline{margin-top:8px;color:#C3D2E8;font-size:14px;}
+  .meta-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .meta-chips span{
+    font-size:12.5px;color:#E7EEF8;background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.18);padding:3px 12px;border-radius:999px;
+  }
+
+  /* ===== 统计卡 ===== */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+    margin-top:26px;
+  }
+  .stat{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;box-shadow:0 2px 10px rgba(22,44,73,.05);
+  }
+  .stat .num{font-size:30px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--navy);}
+  .stat .num small{font-size:14px;font-weight:700;color:var(--muted);margin-left:2px;}
+  .stat .lab{font-size:13px;color:var(--muted);margin-top:2px;}
+
+  /* ===== 章节标题 ===== */
+  .sec-title{display:flex;align-items:baseline;gap:10px;margin:44px 0 6px;}
+  .sec-title h2{font-size:21px;font-weight:900;color:var(--navy);}
+  .sec-title .hint{font-size:13px;color:var(--muted);}
+
+  /* ===== 时间轴 ===== */
+  .tl{margin-top:18px;}
+  .tl-node{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:14px 0;}
+  .tl-body{display:flex;flex-direction:column;gap:8px;}
+  .tl-time{display:flex;align-items:baseline;gap:10px;text-align:left;padding:0;}
+  .slot-label{font-size:14px;font-weight:900;color:var(--c);}
+  .slot-range{font-size:19px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:.5px;}
+  .slot-count{font-size:12px;color:var(--muted);font-weight:500;}
+  .axis{position:relative;display:grid;place-items:center;}
+  .axis::before{
+    content:"";position:absolute;top:-12px;bottom:-12px;left:50%;width:2px;
+    transform:translateX(-50%);background:#D8E0EC;
+  }
+  .tl-node:first-child .axis::before{top:50%;}
+  .tl-node:last-child .axis::before{bottom:50%;}
+  .dot{
+    position:relative;z-index:2;box-sizing:border-box;
+    width:16px;height:16px;border-radius:50%;background:var(--c);
+    box-shadow:0 0 0 5px var(--bg),0 0 0 6px #C9D4E4;
+  }
+  .tl-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px 18px;box-shadow:0 2px 10px rgba(22,44,73,.05);
+  }
+  .pg + .pg{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);}
+  .pg-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
+  .proj-tag{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:12.5px;font-weight:700;color:var(--pc);
+    background:color-mix(in srgb,var(--pc) 10%,#fff);
+    border:1px solid color-mix(in srgb,var(--pc) 35%,#fff);
+    padding:2px 10px;border-radius:999px;
+  }
+  .proj-tag::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--pc);}
+  .pg-count{font-size:12px;color:var(--muted);}
+  .pg-inst{font-size:12px;font-weight:600;color:#8A97B0;}
+  .pg-inst::before{content:"·";margin:0 8px;color:#C3CDDD;font-weight:400;}
+  .team-row{display:flex;align-items:flex-start;gap:10px;padding:3px 0;}
+  .team-tag{
+    flex:none;min-width:78px;text-align:center;
+    font-size:12px;font-weight:700;color:var(--ink);
+    background:#F3F6FB;border:1px solid var(--line);border-radius:8px;padding:2px 8px;
+  }
+  .team-tag.personal{color:var(--muted);background:#F8FAFD;font-weight:500;}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;flex:1;}
+  .chip{
+    font-size:13px;font-weight:500;color:var(--ink);
+    background:#FFFFFF;border:1px solid #DCE4F0;border-radius:999px;
+    padding:1px 12px;white-space:nowrap;
+  }
+  .chip .inst, .c-name .inst{color:#8A97B0;font-weight:500;font-size:11.5px;letter-spacing:.2px;}
+  .chip.inst-chip{
+    font-size:12px;font-weight:600;color:#5A6A85;
+    background:#EEF3FA;border:1px solid #C9D6E8;border-radius:999px;
+    padding:1px 10px;white-space:nowrap;
+  }
+  .tl-node.dim{opacity:.32;}
+  .tl-node.dim .tl-card{box-shadow:none;}
+
+  /* ===== 筛选与明细表 ===== */
+  .filter-bar{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px 16px;margin-top:14px;
+  }
+  .search-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  #q{
+    flex:1;min-width:220px;border:1px solid var(--line);border-radius:10px;
+    padding:9px 14px;font-size:14px;font-family:inherit;color:var(--ink);outline:none;
+    background:#FBFCFE;transition:border-color .15s, box-shadow .15s;
+  }
+  #q:focus{border-color:#6C8BC7;box-shadow:0 0 0 3px rgba(108,139,199,.18);background:#fff;}
+  #q::placeholder{color:#9AA6BC;}
+  #count{font-size:12.5px;color:var(--muted);white-space:nowrap;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+  .chip-row .g-label{font-size:12px;color:var(--muted);align-self:center;margin-right:2px;}
+  button.fchip{
+    border:1px solid var(--line);background:#F6F8FC;color:var(--muted);
+    font-family:inherit;font-size:12.5px;font-weight:600;border-radius:999px;
+    padding:3px 12px;cursor:pointer;transition:all .12s;
+  }
+  button.fchip:hover{border-color:#B9C6DC;color:var(--ink);}
+  button.fchip.active{color:#fff;border-color:transparent;}
+  .table-wrap{margin-top:14px;overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);}
+  table.detail{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13.5px;}
+  table.detail th{
+    background:#EEF2F9;color:#4A5872;font-size:12.5px;font-weight:700;
+    text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;
+  }
+  table.detail td{padding:8px 12px;border-bottom:1px solid #EDF1F7;vertical-align:middle;}
+  table.detail tbody tr:hover td{background:#F7FAFE;}
+  td.c-no{color:var(--muted);font-variant-numeric:tabular-nums;font-size:12.5px;}
+  td.c-time{font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);}
+  td.c-time{border-left:3px solid var(--c);background:#FBFCFE;}
+  td.c-proj{color:var(--ink);}
+  td.c-proj .pdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--pc);margin-right:6px;vertical-align:1px;}
+  td.c-team{color:var(--ink);}
+  td.c-team .ind{color:#98A4BB;font-size:12.5px;}
+  td.c-name{font-weight:700;color:var(--navy);}
+  .empty{display:none;text-align:center;color:var(--muted);padding:34px 0;font-size:14px;}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;line-height:1.9;}
+  footer b{color:#4A5872;font-weight:700;}
+
+  @media (max-width:860px){
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .slot-range{font-size:17px;}
+  }
+  @media (max-width:640px){
+    h1{font-size:21px;letter-spacing:.5px;}
+    .head-inner{padding:22px 14px 0;}
+    .subline{font-size:13px;}
+    .meta-chips span{padding:4px 12px;}
+    .wrap{padding:0 14px 48px;}
+    .sec-title{flex-direction:column;align-items:flex-start;gap:2px;margin:34px 0 4px;}
+    .sec-title h2{font-size:19px;}
+    .sec-title .hint{font-size:12.5px;line-height:1.5;}
+    /* 导航：品牌一行、三个按钮等宽一排，便于手指点击 */
+    .topnav-inner{flex-direction:column;align-items:stretch;padding:8px 12px;gap:8px;}
+    .nav-brand{text-align:center;font-size:14px;}
+    .nav-links{flex-wrap:nowrap;gap:6px;}
+    .nav-links a{flex:1;text-align:center;font-size:13.5px;padding:9px 4px;background:#F6F8FC;border-color:var(--line);}
+    .nav-links a:hover{background:#EAF0F9;color:var(--navy);border-color:#B9C6DC;}
+    #timeline, #detail, #checkin{scroll-margin-top:98px;}
+    /* 统计卡 */
+    .stats{gap:10px;margin-top:20px;}
+    .stat{padding:14px 14px;}
+    .stat .num{font-size:25px;}
+    /* 时间轴 */
+    .tl-node{grid-template-columns:18px 1fr;gap:8px;padding:14px 0;}
+    .tl-time{gap:8px;}
+    .slot-range{font-size:17px;}
+    .team-row{flex-direction:column;gap:5px;}
+    .team-tag{min-width:0;align-self:flex-start;}
+    .tl-card{padding:12px 14px;}
+    /* 签到：触控优化 */
+    .checkin-bar{padding:12px 14px;gap:10px;}
+    .checkin-stats{gap:10px 14px;}
+    .cs-num{font-size:20px;}
+    button.ckbtn{padding:9px 18px;font-size:13.5px;}
+    /* 签到登记：手机端卡片纵向 + 按钮2x2 大触控 */
+    .ck-row{flex-direction:column;align-items:stretch;gap:10px;padding:12px 12px;}
+    .ck-btns{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+    .ck-btn{font-size:13px;padding:10px 6px;text-align:center;}
+    .ck-inst{font-size:12px;padding:1px 9px;}
+    /* 表格紧凑，超出横向滑动 */
+    table.detail{font-size:12.5px;}
+    table.detail th, table.detail td{padding:8px 8px;}
+    #q{min-width:0;}
+    footer{font-size:12px;}
+  }
+  @media (max-width:420px){
+    .nav-links a{font-size:13px;padding:9px 2px;}
+    .pg-head{flex-direction:column;align-items:flex-start;gap:4px;}
+    .cs-lab{font-size:11.5px;}
+    .cs-num{font-size:18px;}
+  }
+  @media print{
+    body{background:#fff;}
+    .topnav{display:none;}
+    .filter-bar{display:none;}
+    .checkin-btns{display:none;}
+    header{background:var(--navy);}
+    .dot{box-shadow:0 0 0 5px #fff,0 0 0 6px #C9D4E4;}
+    .tl-card, .stat, .table-wrap{box-shadow:none;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <span class="nav-brand">编程猫（佛山北滘校区）· RSC</span>
+    <div class="nav-links">
+      <a href="#timeline">赛程时间轴</a>
+      <a href="#checkin">签到详情</a>
+      <a href="#detail">选手明细</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="accent-bar"></div>
+  <div class="head-inner">
+    <div class="eyebrow">编程猫（佛山北滘校区）· 赛事安排</div>
+    <h1>参赛选手时间汇总</h1>
+    <div class="subline">按时间段汇总当天下午参赛的选手名单，点击时间轴节点或筛选标签可快速定位</div>
+    <div class="meta-chips">
+      <span>报名单位：编程猫（佛山北滘校区）</span>
+      <span>场次：下午</span>
+      <span id="metaTotal">选手：91 名</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="stats">
+    <div class="stat"><div class="num"><span id="stTotal">0</span><small>名</small></div><div class="lab">参赛选手</div></div>
+    <div class="stat"><div class="num"><span id="stSlot">0</span><small>个</small></div><div class="lab">比赛时段</div></div>
+    <div class="stat"><div class="num"><span id="stProj">0</span><small>项</small></div><div class="lab">参赛项目</div></div>
+    <div class="stat"><div class="num"><span id="stTeam">0</span><small>支队伍</small></div><div class="lab">团队项目（另 <span id="stPersonal">0</span> 名个人赛选手）</div></div>
+  </div>
+
+  <div class="sec-title">
+    <h2>赛程时间轴</h2>
+    <span class="hint">按开赛时间先后排列 · 点击任一时段可筛选下方明细</span>
+  </div>
+  <div class="tl" id="timeline"></div>
+
+  <div class="sec-title" id="checkin">
+    <h2>签到详情</h2>
+    <span class="hint">去程：上车 / 自行前往 · 回程：上车 / 已被接走 —— 点按钮实时登记，数据自动保存在本浏览器 · 打印可作纸质登记表</span>
+  </div>
+  <div class="ck-teacher">
+    <span class="g-label">签到老师：</span>
+    <select id="ckTeacher"><option value="">— 请选择签到老师 —</option></select>
+    <span class="ck-tip">签到前先选择自己，每笔记录会带上您的名字和时间</span>
+  </div>
+  <div class="checkin-bar">
+    <div class="checkin-stats">
+      <div class="cs-item"><span class="cs-num" id="ckTotal">0</span><span class="cs-lab">已登记 / 共 91 人</span></div>
+      <div class="cs-mini"><span class="cs-dot" style="background:#1F7A4D"></span><span id="ckGo">去程上车 0</span></div>
+      <div class="cs-mini"><span class="cs-dot" style="background:#1C7ED6"></span><span id="ckSelf">自行前往 0</span></div>
+      <div class="cs-mini"><span class="cs-dot" style="background:#7048E8"></span><span id="ckBack">回程上车 0</span></div>
+      <div class="cs-mini"><span class="cs-dot" style="background:#C00000"></span><span id="ckPick">回程已被接走 0</span></div>
+    </div>
+    <div class="checkin-btns">
+      <button id="ckExport" class="ckbtn">导出CSV</button>
+      <button id="ckReset" class="ckbtn">清空登记</button>
+    </div>
+  </div>
+  <div class="ck-search">
+    <input id="ckQ" type="text" placeholder="搜索选手姓名，直接跳到签到卡片，如：周智 / 梅翔" autocomplete="off">
+    <span id="ckQCount"></span>
+  </div>
+  <div class="ck-filters">
+    <span class="g-label">校区：</span>
+    <button class="fchip ck-fchip active" data-k="">全部</button>
+    <button class="fchip ck-fchip" data-k="幼儿园">幼儿园</button>
+    <button class="fchip ck-fchip" data-k="新翼校区">新翼校区</button>
+    <button class="fchip ck-fchip" data-k="陈村校区">陈村校区</button>
+    <button class="fchip ck-fchip" data-k="北滘校区">北滘校区</button>
+  </div>
+  <div class="ck-filters">
+    <span class="g-label">状态：</span>
+    <button class="fchip sk-fchip active" data-sk="">全部</button>
+    <button class="fchip sk-fchip" data-sk="todo">未登记</button>
+    <button class="fchip sk-fchip" data-sk="go">已去程</button>
+    <button class="fchip sk-fchip" data-sk="back">已回程</button>
+  </div>
+  <div class="ck-list" id="ckBody"></div>
+
+  <div class="sec-title" id="detail">
+    <h2>选手明细</h2>
+    <span class="hint">共 91 条 · 支持姓名 / 队伍 / 项目 / 时段检索</span>
+  </div>
+  <div class="filter-bar">
+    <div class="search-row">
+      <input id="q" type="text" placeholder="搜索选手姓名、队伍、项目或时段，如：张祺琪 / 超能队 / 创意3">
+      <span id="count"></span>
+    </div>
+    <div class="chip-row" id="projChips"></div>
+    <div class="chip-row" id="slotChips"></div>
+  </div>
+  <div class="table-wrap">
+    <table class="detail">
+      <colgroup>
+        <col style="width:7%"><col style="width:15%"><col style="width:24%"><col style="width:20%"><col style="width:34%">
+      </colgroup>
+      <thead>
+        <tr><th>序号</th><th>时间</th><th>参赛项目</th><th>队伍名称</th><th>选手姓名</th></tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="empty" id="empty">没有符合条件的选手，请调整筛选条件</div>
+  </div>
+
+  <footer>
+    <b>说明：</b>数据来源为报名汇总表（共 91 条，序号 1–91），全部为下午场次；C++ 初中组、C++ 小学组、Scratch 初级组及循迹个人 B 类为个人项目，创意设计挑战项与技能赛为团队项目（2–3 人/队）。报名机构简化名（幼儿园 / 新翼校区 / 陈村校区 / 北滘校区）：时间轴以独立小框显示、同队同属一个机构时仅在队末标注，明细表每位选手姓名右侧灰字标注，悬停可见完整机构名；项目标题旁附各校区人数汇总。检索仅针对姓名、队伍、项目与时段字段，不影响时间轴与统计卡。
+  </footer>
+</div>
+
+<script>
+/* ===== 数据：序号 / 时段 / 时间 / 参赛项目 / 队伍（个人为—）/ 选手姓名 ===== */
+const DATA = [
+[1,"编程4","15:00-16:00","C++初中组","—","王之顺"],
+[2,"编程4","15:00-16:00","C++初中组","—","陈子豪"],
+[3,"编程4","15:00-16:00","C++初中组","—","张祺琪"],
+[4,"编程4","15:00-16:00","C++小学组","—","梅翔"],
+[5,"编程4","15:00-16:00","Scratch初级组","—","文雨铮"],
+[6,"编程4","15:00-16:00","Scratch初级组","—","张扬邦"],
+[7,"编程4","15:00-16:00","Scratch初级组","—","姜晓棠"],
+[8,"编程4","15:00-16:00","Scratch初级组","—","黄一梵"],
+[9,"编程4","15:00-16:00","Scratch初级组","—","李子恒"],
+[10,"编程4","15:00-16:00","Scratch初级组","—","罗梓浩"],
+[11,"编程4","15:00-16:00","Scratch初级组","—","金泽宇"],
+[12,"编程4","15:00-16:00","Scratch初级组","—","梅思泽"],
+[13,"编程4","15:00-16:00","Scratch初级组","—","田立宇"],
+[14,"编程4","15:00-16:00","Scratch初级组","—","谢双屿"],
+[15,"编程4","15:00-16:00","Scratch初级组","—","林浩文"],
+[16,"编程4","15:00-16:00","Scratch初级组","—","朱一宸"],
+[17,"创意3","13:30-14:30","创意设计挑战项","超能队","杨楷祺"],
+[18,"创意3","13:30-14:30","创意设计挑战项","超能队","蔡冠羽"],
+[19,"创意3","13:30-14:30","创意设计挑战项","超能队","蔡冠杰"],
+[20,"创意3","13:30-14:30","创意设计挑战项","攀登队","黄嘉毅"],
+[21,"创意3","13:30-14:30","创意设计挑战项","攀登队","陈涵菲"],
+[22,"创意3","13:30-14:30","创意设计挑战项","攀登队","张昱旸"],
+[23,"创意3","13:30-14:30","创意设计挑战项","启航队","蔡沁新"],
+[24,"创意3","13:30-14:30","创意设计挑战项","启航队","林予希"],
+[25,"创意3","13:30-14:30","创意设计挑战项","启航队","俞昊言"],
+[26,"创意3","13:30-14:30","创意设计挑战项","闪光队","麦子谦"],
+[27,"创意3","13:30-14:30","创意设计挑战项","闪光队","杜灵珊"],
+[28,"创意3","13:30-14:30","创意设计挑战项","闪光队","周煜然"],
+[29,"创意3","13:30-14:30","创意设计挑战项","探索队","张家淳"],
+[30,"创意3","13:30-14:30","创意设计挑战项","探索队","冯元希"],
+[31,"创意3","13:30-14:30","创意设计挑战项","探索队","谢熠承"],
+[32,"创意4","15:00-16:00","创意设计挑战项","威风队","赵墨姬"],
+[33,"创意4","15:00-16:00","创意设计挑战项","威风队","刘翰林"],
+[34,"创意4","15:00-16:00","创意设计挑战项","威风队","许芷侨"],
+[35,"创意4","15:00-16:00","创意设计挑战项","向阳队","莫晞瑶"],
+[36,"创意4","15:00-16:00","创意设计挑战项","向阳队","梁晞瑾"],
+[37,"创意4","15:00-16:00","创意设计挑战项","向阳队","伍俊宇"],
+[38,"创意4","15:00-16:00","创意设计挑战项","星星队","黎圆程"],
+[39,"创意4","15:00-16:00","创意设计挑战项","星星队","龙乘枫"],
+[40,"创意4","15:00-16:00","创意设计挑战项","星星队","林川"],
+[41,"创意4","15:00-16:00","创意设计挑战项","逐梦队","李思骏"],
+[42,"创意4","15:00-16:00","创意设计挑战项","逐梦队","郭玮琳"],
+[43,"创意4","15:00-16:00","创意设计挑战项","逐梦队","钟维可"],
+[44,"创意4","15:00-16:00","创意设计挑战项","追风队","曹誉欣"],
+[45,"创意4","15:00-16:00","创意设计挑战项","追风队","黄欣蕊"],
+[46,"创意4","15:00-16:00","创意设计挑战项","追风队","邱凡倪"],
+[47,"技能4","13:00-13:30","技能赛-小学组","暗影队","周智"],
+[48,"技能4","13:00-13:30","技能赛-小学组","暗影队","杜韶枫"],
+[49,"技能4","13:00-13:30","技能赛-小学组","赤空队","皮宸宇"],
+[50,"技能4","13:00-13:30","技能赛-小学组","赤空队","罗钧龄"],
+[51,"技能4","13:00-13:30","技能赛-小学组","锦烨创造队","刘锦毅"],
+[52,"技能4","13:00-13:30","技能赛-小学组","锦烨创造队","黄怡烨"],
+[53,"技能4","13:00-13:30","技能赛-小学组","蓝鲨队","霍怡婷"],
+[54,"技能4","13:00-13:30","技能赛-小学组","蓝鲨队","胡睿轩"],
+[55,"技能4","13:00-13:30","技能赛-小学组","闪电队","沈镇科"],
+[56,"技能4","13:00-13:30","技能赛-小学组","闪电队","杨宸铠"],
+[57,"技能4","13:00-13:30","技能赛-小学组","星光队","梁家铭"],
+[58,"技能4","13:00-13:30","技能赛-小学组","星光队","黄晓瑜"],
+[59,"技能4","13:00-13:30","技能赛-小学组","紫电队","邓颂唯"],
+[60,"技能4","13:00-13:30","技能赛-小学组","紫电队","朱博琛"],
+[61,"技能5","14:00-14:30","技能赛-小学组","白鹰队","方琬靖"],
+[62,"技能5","14:00-14:30","技能赛-小学组","白鹰队","黄俐淇"],
+[63,"技能5","14:00-14:30","技能赛-小学组","疾风队","刘承烨"],
+[64,"技能5","14:00-14:30","技能赛-小学组","疾风队","王梓淏"],
+[65,"技能5","14:00-14:30","技能赛-小学组","晋玺未来队","戴晋钧"],
+[66,"技能5","14:00-14:30","技能赛-小学组","晋玺未来队","佟玺旸"],
+[67,"技能5","14:00-14:30","技能赛-小学组","烈焰队","云筠晋"],
+[68,"技能5","14:00-14:30","技能赛-小学组","烈焰队","梁宸语"],
+[69,"技能5","14:00-14:30","技能赛-小学组","水火双子星","李健恺"],
+[70,"技能5","14:00-14:30","技能赛-小学组","水火双子星","李睿轩"],
+[71,"技能5","14:00-14:30","技能赛-小学组","玄冰队","刘昊缙"],
+[72,"技能5","14:00-14:30","技能赛-小学组","玄冰队","冯筠琅"],
+[73,"技能6","15:00-15:30","技能赛-小学组","辰宁探索队","霍辰郗"],
+[74,"技能6","15:00-15:30","技能赛-小学组","辰宁探索队","黄一宁"],
+[75,"技能6","15:00-15:30","技能赛-小学组","锦旭星辰队","蔡旭南"],
+[76,"技能6","15:00-15:30","技能赛-小学组","锦旭星辰队","刘锦兮"],
+[77,"技能6","15:00-15:30","技能赛-小学组","君奕战斗队","石弘奕"],
+[78,"技能6","15:00-15:30","技能赛-小学组","君奕战斗队","张君赫"],
+[79,"技能6","15:00-15:30","技能赛-小学组","猛虎队","杨泽一"],
+[80,"技能6","15:00-15:30","技能赛-小学组","猛虎队","何承谦"],
+[81,"技能6","15:00-15:30","技能赛-小学组","小熊冲锋队","李采镁"],
+[82,"技能6","15:00-15:30","技能赛-小学组","小熊冲锋队","叶梓馨"],
+[83,"技能6","15:00-15:30","技能赛-小学组","泽锡先锋队","郑嘉泽"],
+[84,"技能6","15:00-15:30","技能赛-小学组","泽锡先锋队","陈禹锡"],
+[85,"循迹B2","13:30-15:30","循迹个人B类--小学组","—","谭定帮"],
+[86,"循迹B2","13:30-15:30","循迹个人B类--小学组","—","邓成乐"],
+[87,"循迹B2","13:30-15:30","循迹个人B类--小学组","—","梁钜泽"],
+[88,"循迹B2","13:30-15:30","循迹个人B类--小学组","—","高晨宇"],
+[89,"循迹B2","13:30-15:30","循迹个人B类--小学组","—","李佳桦"],
+[90,"循迹B2","13:30-15:30","循迹个人B类--小学组","—","卢尚泓"],
+[91,"循迹B2","13:30-15:30","循迹个人B类--小学组","—","谢昊霖"]
+];
+
+/* ===== 报名机构：s 简化名（名字右侧显示） / f 完整名（悬停提示） ===== */
+const INST = {
+  "王之顺":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "陈子豪":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "张祺琪":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "梅翔":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "文雨铮":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "张扬邦":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "姜晓棠":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "黄一梵":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "李子恒":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "罗梓浩":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "金泽宇":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "梅思泽":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "田立宇":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "谢双屿":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "林浩文":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "朱一宸":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "杨楷祺":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "蔡冠羽":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "蔡冠杰":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "黄嘉毅":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "陈涵菲":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "张昱旸":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "蔡沁新":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "林予希":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "俞昊言":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "麦子谦":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "杜灵珊":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "周煜然":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "张家淳":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "冯元希":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "谢熠承":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "赵墨姬":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "刘翰林":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "许芷侨":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "莫晞瑶":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "梁晞瑾":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "伍俊宇":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "黎圆程":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "龙乘枫":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "林川":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "李思骏":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "郭玮琳":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "钟维可":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "曹誉欣":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "黄欣蕊":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "邱凡倪":{s:"幼儿园",f:"佛山市顺德区陈村缤纷大地幼儿园"},
+  "周智":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "杜韶枫":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "皮宸宇":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "罗钧龄":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "刘锦毅":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "黄怡烨":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "霍怡婷":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "胡睿轩":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "沈镇科":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "杨宸铠":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "梁家铭":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "黄晓瑜":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "邓颂唯":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "朱博琛":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "方琬靖":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "黄俐淇":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "刘承烨":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "王梓淏":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "戴晋钧":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "佟玺旸":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "云筠晋":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "梁宸语":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "李健恺":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "李睿轩":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "刘昊缙":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "冯筠琅":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "霍辰郗":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "黄一宁":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "蔡旭南":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "刘锦兮":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "石弘奕":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "张君赫":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "杨泽一":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "何承谦":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "李采镁":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "叶梓馨":{s:"新翼校区",f:"佛山市顺德区北滘镇镇编测科技培训有限公司（新翼校区）"},
+  "郑嘉泽":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "陈禹锡":{s:"北滘校区",f:"佛山市顺德区北滘镇小年科技培训有限公司（北滘校区）"},
+  "谭定帮":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "邓成乐":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "梁钜泽":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "高晨宇":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "李佳桦":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "卢尚泓":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+  "谢昊霖":{s:"陈村校区",f:"佛山市顺德区陈村镇虹猫科技培训有限公司（陈村校区）"},
+};
+const INST_ORDER = ["幼儿园","新翼校区","陈村校区","北滘校区"];
+
+const SLOT_ORDER = ["技能4","创意3","循迹B2","技能5","技能6","创意4","编程4"];
+const SLOT_META = {
+  "技能4":{time:"13:00-13:30",color:"#E8590C"},
+  "创意3":{time:"13:30-14:30",color:"#7048E8"},
+  "循迹B2":{time:"13:30-15:30",color:"#C92A2A"},
+  "技能5":{time:"14:00-14:30",color:"#F08C00"},
+  "技能6":{time:"15:00-15:30",color:"#D9480F"},
+  "创意4":{time:"15:00-16:00",color:"#5F3DC4"},
+  "编程4":{time:"15:00-16:00",color:"#1C7ED6"}
+};
+const PROJ_COLOR = {
+  "C++初中组":"#1C7ED6",
+  "C++小学组":"#1098AD",
+  "Scratch初级组":"#0CA678",
+  "创意设计挑战项":"#7048E8",
+  "技能赛-小学组":"#E8590C",
+  "循迹个人B类--小学组":"#C92A2A"
+};
+
+const $ = id => document.getElementById(id);
+const state = {q:"", projects:new Set(), slots:new Set()};
+
+/* 工具 */
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const rowText = r => (r[0]+r[1]+r[2]+r[3]+r[4]+r[5]).toLowerCase();
+function matches(r){
+  if(state.q && !rowText(r).includes(state.q.toLowerCase())) return false;
+  if(state.projects.size && !state.projects.has(r[3])) return false;
+  if(state.slots.size && !state.slots.has(r[1])) return false;
+  return true;
+}
+
+/* 统计卡 */
+(function(){
+  const teams = new Set(DATA.filter(r=>r[4]!=="—").map(r=>r[4]));
+  const personal = DATA.filter(r=>r[4]==="—").length;
+  $("stTotal").textContent = DATA.length;
+  $("stSlot").textContent = SLOT_ORDER.length;
+  $("stProj").textContent = Object.keys(PROJ_COLOR).length;
+  $("stTeam").textContent = teams.size;
+  $("stPersonal").textContent = personal;
+  $("metaTotal").textContent = "选手：" + DATA.length + " 名";
+})();
+
+/* 时间轴 */
+(function renderTimeline(){
+  const tl = $("timeline");
+  tl.innerHTML = SLOT_ORDER.map(slot => {
+    const meta = SLOT_META[slot];
+    const rows = DATA.filter(r => r[1] === slot);
+    /* 按项目 → 队伍分组 */
+    const projOrder = [];
+    const groups = {};
+    rows.forEach(r => {
+      if(!groups[r[3]]){ groups[r[3]] = {}; projOrder.push(r[3]); }
+      const g = groups[r[3]];
+      if(!g[r[4]]) g[r[4]] = [];
+      g[r[4]].push(r[5]);
+    });
+    const body = projOrder.map(proj => {
+      const pTeams = Object.entries(groups[proj]);
+      const n = pTeams.reduce((s,t)=>s+t[1].length,0);
+      const teamCount = pTeams.filter(([team])=>team!=="—").length;
+      const countLabel = teamCount > 0 ? teamCount + ' 支队伍 · ' + n + ' 人' : n + ' 人（个人）';
+      /* 各校区人数汇总（按固定顺序：幼儿园/新翼/陈村/北滘） */
+      const instCount = {};
+      pTeams.forEach(([team,names]) => names.forEach(nm => {
+        const s = INST[nm] ? INST[nm].s : "";
+        if (s) instCount[s] = (instCount[s] || 0) + 1;
+      }));
+      const instLabel = INST_ORDER.filter(k => instCount[k])
+        .sort((a,b) => instCount[b] - instCount[a] || INST_ORDER.indexOf(a) - INST_ORDER.indexOf(b))
+        .map(k => k + instCount[k] + '人').join(' · ');
+      const teamRows = pTeams.map(([team,names]) => {
+        const isP = team === "—";
+        const insts = names.map(nm => INST[nm] ? INST[nm].s : "");
+        const uniform = insts.every(v => v === insts[0]);
+        const chips = names.map((nm,i) => {
+          let lbl = "";
+          if (isP) { lbl = insts[i]; }
+          else if (uniform) { if (i === names.length - 1) lbl = insts[i]; }
+          else lbl = insts[i];
+          const full = INST[nm] ? INST[nm].f : "";
+          return '<span class="chip"' + (full ? ' title="' + esc(full) + '"' : '') + '>' + esc(nm) + '</span>' +
+            (lbl ? '<span class="chip inst-chip"' + (full ? ' title="' + esc(full) + '"' : '') + '>' + esc(lbl) + '</span>' : '');
+        }).join("");
+        return '<div class="team-row">' +
+          (isP ? '<span class="team-tag personal">个人</span>'
+               : '<span class="team-tag">' + esc(team) + '</span>') +
+          '<div class="chips">' + chips + '</div></div>';
+      }).join("");
+      return '<div class="pg">' +
+        '<div class="pg-head"><span class="proj-tag" style="--pc:' + PROJ_COLOR[proj] + '">' + esc(proj) + '</span>' +
+        '<span class="pg-count">' + countLabel + '</span>' +
+        (instLabel ? '<span class="pg-inst">' + instLabel + '</span>' : '') + '</div>' +
+        '<div class="pg-body">' + teamRows + '</div></div>';
+    }).join("");
+    return '<div class="tl-node" data-slot="' + slot + '" style="--c:' + meta.color + '">' +
+      '<div class="axis"><div class="dot"></div></div>' +
+      '<div class="tl-body">' +
+        '<div class="tl-time">' +
+          '<div class="slot-range">' + meta.time + '</div>' +
+          '<div class="slot-label">' + slot + '</div>' +
+          '<div class="slot-count">' + rows.length + ' 人</div>' +
+        '</div>' +
+        '<div class="tl-card">' + body + '</div>' +
+      '</div></div>';
+  }).join("");
+  tl.addEventListener("click", e => {
+    const node = e.target.closest(".tl-node");
+    if(!node) return;
+    const slot = node.dataset.slot;
+    if(state.slots.has(slot)) state.slots.delete(slot); else state.slots.add(slot);
+    syncChips(); renderTable(); renderTimelineState();
+  });
+})();
+
+function renderTimelineState(){
+  document.querySelectorAll(".tl-node").forEach(node => {
+    const slot = node.dataset.slot;
+    let dim = false;
+    if(state.slots.size && !state.slots.has(slot)) dim = true;
+    if(state.projects.size){
+      const hasProj = DATA.some(r => r[1]===slot && state.projects.has(r[3]));
+      if(!hasProj) dim = true;
+    }
+    if(state.q){
+      const hasHit = DATA.some(r => r[1]===slot && matches(r));
+      if(!hasHit) dim = true;
+    }
+    node.classList.toggle("dim", dim);
+  });
+}
+
+/* 筛选 chips */
+(function buildChips(){
+  const pc = $("projChips");
+  pc.innerHTML = '<span class="g-label">项目</span>' +
+    '<button class="fchip" data-k="all-proj">全部</button>' +
+    Object.keys(PROJ_COLOR).map(p =>
+      '<button class="fchip" data-proj="' + esc(p) + '" style="--pc:' + PROJ_COLOR[p] + '">' + esc(p) + '</button>'
+    ).join("");
+  const sc = $("slotChips");
+  sc.innerHTML = '<span class="g-label">时段</span>' +
+    '<button class="fchip" data-k="all-slot">全部</button>' +
+    SLOT_ORDER.map(s =>
+      '<button class="fchip" data-slot="' + s + '" style="--c:' + SLOT_META[s].color + '">' + s + ' ' + SLOT_META[s].time + '</button>'
+    ).join("");
+  const all = document.querySelectorAll("#projChips .fchip, #slotChips .fchip");
+  all.forEach(btn => btn.addEventListener("click", () => {
+    if(btn.dataset.k === "all-proj"){ state.projects.clear(); }
+    else if(btn.dataset.k === "all-slot"){ state.slots.clear(); }
+    else if(btn.dataset.proj){
+      const p = btn.dataset.proj;
+      state.projects.has(p) ? state.projects.delete(p) : state.projects.add(p);
+    } else if(btn.dataset.slot){
+      const s = btn.dataset.slot;
+      state.slots.has(s) ? state.slots.delete(s) : state.slots.add(s);
+    }
+    syncChips(); renderTable(); renderTimelineState();
+  }));
+  $("q").addEventListener("input", e => {
+    state.q = e.target.value.trim();
+    renderTable(); renderTimelineState();
+  });
+})();
+
+function syncChips(){
+  document.querySelectorAll("#projChips .fchip").forEach(b => {
+    if(b.dataset.k === "all-proj"){ b.classList.toggle("active", state.projects.size === 0); }
+    else b.classList.toggle("active", state.projects.has(b.dataset.proj));
+  });
+  document.querySelectorAll("#slotChips .fchip").forEach(b => {
+    if(b.dataset.k === "all-slot"){ b.classList.toggle("active", state.slots.size === 0); }
+    else b.classList.toggle("active", state.slots.has(b.dataset.slot));
+  });
+}
+
+/* 明细表（按可见行计算 rowspan，每位选手均标注校区） */
+function renderTable(){
+  const vis = DATA.filter(matches);
+  const tbody = $("tbody");
+  const rows = [];
+  vis.forEach(r => {
+    const isFirst = vis.findIndex(x => x[1] === r[1]) === vis.indexOf(r);
+    const lbl = INST[r[5]] ? INST[r[5]].s : "";
+    const full = INST[r[5]] ? INST[r[5]].f : "";
+    rows.push('<tr>' +
+      '<td class="c-no">' + r[0] + '</td>' +
+      (isFirst
+        ? '<td class="c-time" rowspan="' + vis.filter(x => x[1] === r[1]).length + '" style="--c:' + SLOT_META[r[1]].color + '">' + r[2] + '</td>'
+        : '') +
+      '<td class="c-proj"><span class="pdot" style="--pc:' + PROJ_COLOR[r[3]] + '"></span>' + esc(r[3]) + '</td>' +
+      '<td class="c-team">' + (r[4] === "—" ? '<span class="ind">个人</span>' : esc(r[4])) + '</td>' +
+      '<td class="c-name"' + (full ? ' title="' + esc(full) + '"' : '') + '>' + esc(r[5]) +
+      (lbl ? '<span class="inst">（' + esc(lbl) + '）</span>' : '') + '</td></tr>');
+  });
+  tbody.innerHTML = rows.join("");
+  $("count").textContent = "共 " + DATA.length + " 条，当前显示 " + vis.length + " 条";
+  $("empty").style.display = vis.length ? "none" : "block";
+}
+
+renderTable();
+syncChips();
+
+/* ===== 签到详情：四态登记 =====
+   go=去程上车 self=自行前往（去程二选一）
+   back=回程上车 pick=回程已被接走（回程二选一）
+   去程与回程相互独立，可同时登记 */
+const CK_KEY = "rsc_checkin_v3";
+/* ===== 签到老师名单（占位，后续在此数组替换为真实名单） ===== */
+const TEACHERS = ["KK", "小源", "小Q", "毛毛"];
+/* ===== LeanCloud 云同步（可选）：填入凭据后多老师实时互通 =====
+   1) 注册 LeanCloud 并创建应用 → 开通「数据存储」
+   2) 控制台创建 Class：Checkin
+   3) 复制 AppID / AppKey / 服务器URL（ServerURL）填入下方 LC 配置
+   4) 填入后自动启用：签到实时同步到所有老师设备（10秒轮询 + LiveQuery）
+   留空 = 单机模式（各设备独立存储，数据不互通） */
+const LC = { appId: "", appKey: "", serverURL: "", enabled: false };
+let ckState = {};
+function ckLoad(){
+  try {
+    const raw = JSON.parse(localStorage.getItem(CK_KEY) || "{}") || {};
+    /* 兼容旧版（v2 字符串结构 {g:"go", b:"back"}） */
+    Object.keys(raw).forEach(nm => {
+      if (typeof raw[nm].g === "string") raw[nm].g = raw[nm].g ? {k: raw[nm].g} : null;
+      if (typeof raw[nm].b === "string") raw[nm].b = raw[nm].b ? {k: raw[nm].b} : null;
+    });
+    ckState = raw;
+  } catch(e){ ckState = {}; }
+}
+ckLoad();
+function stOf(nm){ const s = ckState[nm] || {g:null,b:null}; return {g: s.g || null, b: s.b || null}; }
+function ckSave(){
+  try { localStorage.setItem(CK_KEY, JSON.stringify(ckState)); } catch(e){}
+}
+function pickNewer(a, b){
+  if (!a) return b; if (!b) return a;
+  return (b.at || "") > (a.at || "") ? b : a;
+}
+function pushCloud(nm){
+  if (!LC.enabled) return;
+  const st = ckState[nm]; if (!st) return;
+  const q = new AV.Query("Checkin");
+  q.equalTo("name", nm);
+  q.first().then(o => {
+    if (o) {
+      o.set("g", pickNewer(st.g, o.get("g") || null));
+      o.set("b", pickNewer(st.b, o.get("b") || null));
+      o.save().catch(()=>{});
+    } else {
+      const C = AV.Object.extend("Checkin");
+      const obj = new C();
+      obj.set("name", nm); obj.set("g", st.g); obj.set("b", st.b);
+      obj.save().catch(()=>{});
+    }
+  }).catch(()=>{});
+}
+function applyCloud(nm, g, b){
+  if (!ckState[nm]) ckState[nm] = {g:null,b:null};
+  ckState[nm] = { g: pickNewer(ckState[nm].g, g), b: pickNewer(ckState[nm].b, b) };
+  ckSave(); renderCheckin();
+}
+let lcTimer = null;
+function lcInit(){
+  if (!LC.appId || !LC.appKey || !LC.serverURL) return;
+  try {
+    if (typeof AV === "undefined") return;
+    AV.init({ appId: LC.appId, appKey: LC.appKey, serverURL: LC.serverURL });
+    LC.enabled = true;
+    lcPull();
+    lcTimer = setInterval(lcPull, 10000);
+    try {
+      const q = new AV.Query("Checkin");
+      q.subscribe().then(sub => {
+        sub.on("create", obj => { if (obj.get("name")) applyCloud(obj.get("name"), obj.get("g") || null, obj.get("b") || null); });
+        sub.on("update", obj => { if (obj.get("name")) applyCloud(obj.get("name"), obj.get("g") || null, obj.get("b") || null); });
+      }).catch(()=>{});
+    } catch(e){}
+  } catch(e){}
+}
+function lcPull(){
+  if (!LC.enabled) return;
+  const q = new AV.Query("Checkin");
+  q.limit(1000);
+  q.find().then(objs => {
+    const next = JSON.parse(JSON.stringify(ckState));
+    objs.forEach(o => {
+      const nm = o.get("name"); if (!nm) return;
+      if (!next[nm]) next[nm] = {g:null,b:null};
+      next[nm] = { g: pickNewer(next[nm].g, o.get("g") || null), b: pickNewer(next[nm].b, o.get("b") || null) };
+    });
+    if (JSON.stringify(next) !== JSON.stringify(ckState)) { ckState = next; renderCheckin(); }
+  }).catch(()=>{});
+}
+function renderCheckin(){
+  const box = $("ckBody");
+  const html = [];
+  let ckSeq = 0;
+  SLOT_ORDER.forEach(slot => {
+    const rows = DATA.filter(r => r[1] === slot);
+    const meta = SLOT_META[slot];
+    const done = rows.filter(r => { const s = stOf(r[5]); return s.g || s.b; }).length;
+    html.push('<div class="ck-slothead' + (done === rows.length ? " full" : "") + '">' +
+      '<span class="csh-time">' + meta.time + '</span>' +
+      '<span class="csh-name">' + slot + '</span>' +
+      '<span class="csh-prog">已签 ' + done + '/' + rows.length + '</span>' +
+    '</div>');
+    rows.forEach(r => {
+      const nm = r[5], st = stOf(nm);
+      ckSeq++;
+      const gLbl = st.g ? (st.g.k === "go" ? "去程上车" : "自行前往") : "";
+      const bLbl = st.b ? (st.b.k === "back" ? "回程上车" : "回程已被接走") : "";
+      const log = (gLbl ? '<span class="lg-go">' + gLbl + ' · ' + esc(st.g.by) + ' ' + (st.g.at || "") + '</span>' : "") +
+                  (bLbl ? '<span class="lg-back">' + bLbl + ' · ' + esc(st.b.by) + ' ' + (st.b.at || "") + '</span>' : "");
+      const btns =
+        '<button class="ck-btn' + (st.g && st.g.k === "go" ? " on-go" : "") + '" data-name="' + esc(nm) + '" data-k="go">去程上车</button>' +
+        '<button class="ck-btn' + (st.g && st.g.k === "self" ? " on-self" : "") + '" data-name="' + esc(nm) + '" data-k="self">自行前往</button>' +
+        '<button class="ck-btn' + (st.b && st.b.k === "back" ? " on-back" : "") + '" data-name="' + esc(nm) + '" data-k="back">回程上车</button>' +
+        '<button class="ck-btn' + (st.b && st.b.k === "pick" ? " on-pick" : "") + '" data-name="' + esc(nm) + '" data-k="pick">回程已被接走</button>';
+      html.push('<div class="ck-row' + ((st.g || st.b) ? " on" : "") + '">' +
+        '<div class="ck-info">' +
+          '<span class="ck-seq">' + ckSeq + '</span>' +
+          '<span class="ck-slotbar" style="--c:' + SLOT_META[slot].color + '"></span>' +
+          '<span class="ck-name">' + esc(nm) + '</span>' +
+          '<span class="ck-inst">' + (INST[nm] ? esc(INST[nm].s) : "") + '</span>' +
+          '<span class="ck-meta">' + esc(r[2]) + ' · ' + esc(r[3]) + (r[4] === "—" ? " · 个人" : " · " + esc(r[4])) + '</span>' +
+          (log ? '<span class="ck-log">' + log + '</span>' : "") +
+        '</div>' +
+        '<div class="ck-btns">' + btns + '</div>' +
+      '</div>');
+    });
+  });
+  box.innerHTML = html.join("");
+  let go = 0, self = 0, back = 0, pick = 0, done = 0;
+  DATA.forEach(r => {
+    const s = stOf(r[5]);
+    if (s.g && s.g.k === "go") go++;
+    else if (s.g && s.g.k === "self") self++;
+    if (s.b && s.b.k === "back") back++;
+    else if (s.b && s.b.k === "pick") pick++;
+    if (s.g || s.b) done++;
+  });
+  $("ckTotal").textContent = done;
+  $("ckGo").textContent = "去程上车 " + go;
+  $("ckSelf").textContent = "自行前往 " + self;
+  $("ckBack").textContent = "回程上车 " + back;
+  $("ckPick").textContent = "回程已被接走 " + pick;
+  box.querySelectorAll(".ck-btn").forEach(el => {
+    el.addEventListener("click", () => {
+      const teacher = $("ckTeacher").value;
+      if (!teacher) { alert("请先在上方选择「签到老师」再登记"); return; }
+      const nm = el.dataset.name, k = el.dataset.k;
+      const st = stOf(nm);
+      const d = new Date();
+      const now = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0"+d.getDate()).slice(-2) + " " + ("0"+d.getHours()).slice(-2) + ":" + ("0"+d.getMinutes()).slice(-2);
+      if (k === "go" || k === "self") {
+        st.g = (st.g && st.g.k === k) ? null : {k:k, by:teacher, at:now};
+      } else {
+        st.b = (st.b && st.b.k === k) ? null : {k:k, by:teacher, at:now};
+      }
+      ckState[nm] = st;
+      ckSave(); pushCloud(nm); renderCheckin();
+    });
+  });
+  /* 过滤：姓名搜索 + 校区筛选 + 状态筛选，分组标题随匹配联动显隐 */
+  const kw = ($("ckQ").value || "").trim();
+  const hits = [];
+  let curHead = null;
+  Array.from(box.children).forEach(el => {
+    if (el.classList && el.classList.contains("ck-slothead")) { curHead = el; el.style.display = "none"; return; }
+    if (!el.classList || !el.classList.contains("ck-row")) return;
+    const nm = el.querySelector(".ck-name").textContent;
+    const inst = INST[nm] ? INST[nm].s : "";
+    const s2 = stOf(nm);
+    const skHit = !ckSk ||
+      (ckSk === "todo" ? !(s2.g || s2.b) :
+       ckSk === "go" ? !!s2.g :
+       ckSk === "back" ? !!s2.b : true);
+    const hit = (!kw || nm.indexOf(kw) !== -1) && (!ckInst || inst === ckInst) && skHit;
+    el.style.display = hit ? "" : "none";
+    if (hit) { hits.push(el); if (curHead) curHead.style.display = ""; }
+  });
+  $("ckQCount").textContent = kw ? "找到 " + hits.length + " 人" : "";
+  if (kw && hits.length === 1) {
+    hits[0].classList.add("hit");
+    hits[0].scrollIntoView({block:"center", behavior:"smooth"});
+  }
+}
+let ckInst = "", ckSk = "";
+document.querySelectorAll(".sk-fchip").forEach(el => {
+  el.addEventListener("click", () => {
+    const k = el.dataset.sk || "";
+    ckSk = (ckSk === k) ? "" : k;
+    document.querySelectorAll(".sk-fchip").forEach(b => b.classList.toggle("active", (b.dataset.sk || "") === ckSk));
+    renderCheckin();
+  });
+});
+document.querySelectorAll(".ck-fchip").forEach(el => {
+  el.addEventListener("click", () => {
+    const k = el.dataset.k || "";
+    ckInst = (ckInst === k) ? "" : k;
+    document.querySelectorAll(".ck-fchip").forEach(b => b.classList.toggle("active", (b.dataset.k || "") === ckInst));
+    renderCheckin();
+  });
+});
+$("ckQ").addEventListener("input", renderCheckin);
+let teacherList = TEACHERS.slice();
+function fillTeacherSelect(sel, selected){
+  const opts = ['<option value="">— 请选择签到老师 —</option>'];
+  teacherList.forEach(t => opts.push('<option' + (t === selected ? ' selected' : '') + '>' + esc(t) + '</option>'));
+  opts.push('<option value="__add__">＋ 添加新老师...</option>');
+  sel.innerHTML = opts.join("");
+}
+(function(){
+  const sel = $("ckTeacher");
+  try {
+    const customs = JSON.parse(localStorage.getItem("rsc_teachers_custom") || "[]");
+    customs.forEach(n => { if (teacherList.indexOf(n) === -1) teacherList.push(n); });
+  } catch(e){}
+  const saved = localStorage.getItem("rsc_teacher");
+  fillTeacherSelect(sel, saved && teacherList.indexOf(saved) !== -1 ? saved : "");
+  sel.addEventListener("change", () => {
+    if (sel.value === "__add__") {
+      const name = (window.prompt("输入新老师姓名：") || "").trim();
+      if (name) {
+        if (teacherList.indexOf(name) === -1) {
+          teacherList.push(name);
+          try {
+            const customs = JSON.parse(localStorage.getItem("rsc_teachers_custom") || "[]");
+            customs.push(name);
+            localStorage.setItem("rsc_teachers_custom", JSON.stringify(customs));
+          } catch(e){}
+        }
+        fillTeacherSelect(sel, name);
+      } else {
+        fillTeacherSelect(sel, localStorage.getItem("rsc_teacher") || "");
+      }
+    } else {
+      try { localStorage.setItem("rsc_teacher", sel.value); } catch(e){}
+    }
+  });
+})();
+$("ckExport").addEventListener("click", () => {
+  const rows = [["序号","姓名","校区","时段","参赛项目","队伍","去程","去程老师","去程时间","回程","回程老师","回程时间"]];
+  DATA.forEach(r => {
+    const st = stOf(r[5]);
+    rows.push([r[0], r[5], INST[r[5]] ? INST[r[5]].s : "", r[1], r[3], r[4],
+      st.g ? (st.g.k === "go" ? "去程上车" : "自行前往") : "", st.g ? (st.g.by || "") : "", st.g ? (st.g.at || "") : "",
+      st.b ? (st.b.k === "back" ? "回程上车" : "回程已被接走") : "", st.b ? (st.b.by || "") : "", st.b ? (st.b.at || "") : ""]);
+  });
+  const csv = "\uFEFF" + rows.map(rr => rr.map(v => '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"').join(",")).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv;charset=utf-8"}));
+  a.download = "RSC签到登记表.csv";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+});
+$("ckReset").addEventListener("click", () => { if (confirm("确认清空全部签到登记？")) { ckState = {}; ckSave(); renderCheckin(); } });
+renderCheckin();
+setTimeout(lcInit, 800);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av-min.js"></script>
+</body>
+</html>
